@@ -3,6 +3,7 @@ set -e
 
 build_dir=$1
 dst_dir=$2
+channel=$3
 
 data_img="${dst_dir}/data.ext4"
 
@@ -22,9 +23,9 @@ container=$(docker run --privileged -e DOCKER_TLS_CERTDIR="" \
 	-v "${build_dir}/data/":/data \
 	-v "${build_dir}/data/docker/":/var/lib/docker \
 	-v "${build_dir}":/build \
-	-d docker:20.10-dind --storage-driver overlay2)
+	-d docker:27.2-dind --storage-driver overlay2)
 
-docker exec "${container}" sh /build/dind-import-containers.sh
+docker exec "${container}" sh /build/dind-import-containers.sh "${channel}"
 
 docker stop "${container}"
 
