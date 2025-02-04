@@ -1,10 +1,7 @@
-From 4c09e7741c219ef28be912e97a986b6402290c9b Mon Sep 17 00:00:00 2001
-Message-Id: <4c09e7741c219ef28be912e97a986b6402290c9b.1632758899.git.stefan@agner.ch>
-In-Reply-To: <e18419a214ba872d14462354886148f976312e3c.1632758899.git.stefan@agner.ch>
-References: <e18419a214ba872d14462354886148f976312e3c.1632758899.git.stefan@agner.ch>
+From defc964eaa9f4ccc9cd1568ade4e4d81f35b9e07 Mon Sep 17 00:00:00 2001
 From: Pascal Vizeli <pvizeli@syshack.ch>
 Date: Fri, 24 Apr 2020 11:37:55 +0000
-Subject: [PATCH 2/2] pmic: enable LDO2 vcc33_mipi at bootup
+Subject: [PATCH] pmic: enable LDO2 vcc33_mipi at bootup
 
 Signed-off-by: Pascal Vizeli <pvizeli@syshack.ch>
 ---
@@ -64,5 +61,5 @@ index f85209c649..6fa1bb0c66 100644
 +}
 +#endif
 -- 
-2.33.0
+2.43.0
 

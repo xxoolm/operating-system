@@ -12,14 +12,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         gpg \
         dirmngr \
         software-properties-common \
-    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
-    && add-apt-repository "deb https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+    && curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/trusted.gpg.d/docker.gpg] \
+        https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list \
     && apt-get update && apt-get install -y --no-install-recommends \
         docker-ce \
     && rm -rf /var/lib/apt/lists/*
 
 # Build tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
+	automake \
         bash \
         bc \
         binutils \
@@ -28,27 +30,26 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         cpio \
         file \
         git \
+        graphviz \
+	help2man \
+        jq \
         make \
         ncurses-dev \
+        openssh-client \
         patch \
         perl \
         python3 \
         python3-matplotlib \
         python-is-python3 \
-        graphviz \
-        rsync \
-        sudo \
-        unzip \
-        zip \
-        wget \
         qemu-utils \
-        openssh-client \
+        rsync \
+        skopeo \
+        sudo \
+	texinfo \
+        unzip \
         vim \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	skopeo \
-	jq \
+        wget \
+        zip \
     && rm -rf /var/lib/apt/lists/*
 
 # Init entry
