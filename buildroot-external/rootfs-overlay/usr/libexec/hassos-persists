@@ -16,13 +16,23 @@ if [ -e /usr/sbin/fw_setenv ]; then
     fi
 
 ###
-# Barebox
-else
-
+# GRUB
+elif [ -e /usr/bin/grub-editenv ]; then
+    GRUBENV_FILE="$(grep '^grubenv=' < /etc/rauc/system.conf | cut -d= -f2)"
     # machine-id
-    if [ "$(barebox-state -g state.machine_id -i /etc/barebox-state.dtb)" != "${MACHINE_ID}" ]; then
+    if [ "$(/usr/bin/grub-editenv "$GRUBENV_FILE" list | grep '^MACHINE_ID=' | cut -d= -f2)" != "${MACHINE_ID}" ]; then
         echo "[INFO] set machine-id to ${MACHINE_ID}"
-        barebox-state -s "state.machine_id=${MACHINE_ID}" -i /etc/barebox-state.dtb
+        /usr/bin/grub-editenv "$GRUBENV_FILE" set "MACHINE_ID=${MACHINE_ID}"
+    else
+        echo "[INFO] machine-id is okay"
+    fi
+
+else
+    if ! grep -q "systemd.machine_id=${MACHINE_ID}" /mnt/boot/cmdline.txt; then
+        echo "[INFO] set machine-id to ${MACHINE_ID}"
+        if sed -i "s/systemd.machine_id=[0-9a-fA-F]*/systemd.machine_id=${MACHINE_ID}/" /mnt/boot/cmdline.txt; then
+            sed -i "1 s/$/ systemd.machine_id=${MACHINE_ID}/" /mnt/boot/cmdline.txt
+        fi
     else
         echo "[INFO] machine-id is okay"
     fi

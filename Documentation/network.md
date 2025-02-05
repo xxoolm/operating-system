@@ -128,6 +128,14 @@ profile using DHCP, use the following commands on the host console:
 
 Home Assistant OS will recreate the default connection profile during boot.
 
+### Enabling Wi-Fi
+
+Wi-Fi is discouraged for reliability reasons. However, if you still prefer to use Wi-Fi, you can us the `ha network` command to set up Wi-Fi (example for a Raspberry Pi 4, check `ha network info` to check if your board supports Wi-Fi and the name of the Wi-Fi device):
+
+```bash
+ha network update wlan0 --ipv4-method auto --wifi-auth wpa-psk --wifi-mode infrastructure --wifi-ssid "MY-SSID" --wifi-psk MY_PASS
+````
+
 ### Powersave
 
 If you have trouble with powersave then apply the following changes:
@@ -180,6 +188,6 @@ If you now view the default connection `cat /etc/NetworkManager/system-connectio
 
 Doing a `nmcli con reload` does not always work, so restart the virtual machine or the physical system.
 
-[nm-manual]: https://developer.gnome.org/NetworkManager/stable/manpages.html
+[nm-manual]: https://networkmanager.dev/docs/api/1.40/manpages.html
 [configuration-usb]: configuration.md
-[uuid]: https://www.uuidgenerator.net/
+[uuid]: https://www.uuidgenerator.net/version4

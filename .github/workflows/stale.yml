@@ -3,11 +3,14 @@ name: Stale
 # yamllint disable-line rule:truthy
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "40 5 * * *"
   workflow_dispatch:
 
 jobs:
   stale:
+    permissions:
+      issues: write  # for actions/stale to close stale issues
+      pull-requests: write  # for actions/stale to close stale PRs
     runs-on: ubuntu-latest
     steps:
       # The 90 day stale policy
@@ -16,7 +19,7 @@ jobs:
       # - No PRs marked as no-stale or pinned
       # - No issues marked as no-stale, help-wanted or pinned
       - name: 90 days stale issues & PRs policy
-        uses: actions/stale@v4
+        uses: actions/stale@v9.1.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           days-before-stale: 90
